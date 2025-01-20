@@ -1,0 +1,26 @@
+{
+  "name": "lms-api-client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:flow48-com/lms-api-client.git",
+  "author": "UtopiaEH <utopiaeh01@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write src/**/*.ts",
+    "gen:api": "swagger-typescript-api -p http://localhost:8081/swagger/lms-api.yaml -o ./generated --custom-config swagger-config.cjs"
+  },
+  "dependencies": {
+    "@types/node": "^22.10.7",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "eslint": "^9.18.0",
+    "prettier": "^3.4.2",
+    "swagger-typescript-api": "^13.0.23",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.9",
+    "vite-plugin-dts": "^4.5.0"
+  }
+}
