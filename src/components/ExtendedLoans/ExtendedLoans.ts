@@ -1,6 +1,5 @@
 import { Loans } from 'generated/Loans';
 import { HttpClient, RequestParams } from 'generated/http-client';
-import { LoanRevioDisbursementsResponse } from 'src/integrations/schemas/loans-old';
 import { AxiosResponse } from 'axios';
 import {
   CancelLoanRequest,
@@ -11,8 +10,7 @@ import {
   SetLoanDefaultReviewStatusPayload,
   WriteOffLoanPayload,
 } from 'generated/data-contracts';
-import { TPaymentRequestsSchemaResponse } from 'integrations/schemas/PaymentRequest';
-import { TNewLoan, TValidatePaymentLinkRequest } from 'integrations/api/lms-api/ExtendedLoans';
+import { TValidatePaymentLinkRequest } from 'components/ExtendedLoans/interfaces';
 
 class ExtendedLoans {
   private loans: Loans;

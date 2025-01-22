@@ -6,10 +6,8 @@ import {
   GetCompanyActionLogParams,
   GetCompanyLoansParams,
 } from 'generated/data-contracts';
-import {
-  QueryCompanyResponse,
-  TGetCompanyLoansQuery,
-} from 'integrations/api/lms-api/ExtendedCompanies';
+import { QueryCompanyResponse, TGetCompanyLoansQuery } from 'components/ExtendedCompanies/interfaces';
+
 
 class ExtendedCompanies {
   private companies: Companies;

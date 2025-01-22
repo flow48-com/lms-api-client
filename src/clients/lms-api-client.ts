@@ -6,6 +6,7 @@ import { Schedule } from 'generated/Schedule';
 import { TimeMachine } from 'generated/TimeMachine';
 import { ExtendedCompanies } from 'components/ExtendedCompanies';
 import { ExtendedLoans } from 'components/ExtendedLoans';
+import ExtendedHttpClient from 'clients/ExtendedHttpClient';
 
 export class LmsApiClient {
   companies: ExtendedCompanies;
@@ -16,7 +17,7 @@ export class LmsApiClient {
   schedule: Schedule;
   timeMachine: TimeMachine;
 
-  constructor(httpClient: HttpClient) {
+  constructor(httpClient: ExtendedHttpClient) {
     this.companies = new ExtendedCompanies(httpClient);
     this.dashboard = new Dashboard(httpClient);
     this.disbursementRequests = new DisbursementRequests(httpClient);

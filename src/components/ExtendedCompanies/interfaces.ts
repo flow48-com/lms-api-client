@@ -4,9 +4,9 @@ import {
   GetCompanyLoansData,
   GetCompanyLoansParams,
 } from 'generated/data-contracts';
-import { Link, WithEmbedded, WithLinks, WithMeta } from 'lms-types';
 import { RequestParams } from 'generated/http-client';
 import { AxiosResponse } from 'axios';
+import { Link, WithEmbedded, WithLinks, WithMeta } from 'types';
 
 export type CustomType<Data, Links, Embedded = NonNullable<unknown>> = WithEmbedded<
   WithLinks<WithMeta<Data>, Links>,
