@@ -11,7 +11,7 @@ export const handleParamsSerializer = (params: Record<string, unknown> | URLSear
     return params.toString();
   }
 
-  const queryString = Object.entries(params)
+  return Object.entries(params)
     .map(([key, value]) => {
       if (Array.isArray(value)) {
         return value.map((val) => `${key}=${encodeURIComponent(val)}`).join('&');
@@ -20,5 +20,4 @@ export const handleParamsSerializer = (params: Record<string, unknown> | URLSear
     })
     .join('&');
 
-  return queryString;
 }

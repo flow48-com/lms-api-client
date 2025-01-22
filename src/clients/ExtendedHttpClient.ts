@@ -1,30 +1,32 @@
-import { HttpClient } from 'generated/http-client';
+import { ApiConfig, HttpClient } from 'generated/http-client';
 import { handleParamsSerializer } from '../helper';
 import { ParamsSerializerOptions } from 'axios';
 import axiosRetry from 'axios-retry';
 
 
 class ExtendedHttpClient extends HttpClient {
-  public clientInstance = this.instance;
 
-  constructor(baseURL: string, paramsSerializer?: (params: Record<string, unknown> | URLSearchParams, options?: ParamsSerializerOptions) => string) {
+  constructor(params: ApiConfig) {
     super({
-      baseURL: baseURL,
+      baseURL: params.baseURL,
       paramsSerializer: (params, options) => {
-        if(paramsSerializer) {
-          return paramsSerializer(params, options);
+        if (params.paramsSerializer) {
+          return params.paramsSerializer(params, options);
         }
 
         return handleParamsSerializer(params);
       },
+      'axios-retry': {
+        retries: 3,
+      },
+      ...params,
     });
 
-    axiosRetry(this.clientInstance, { retries: 3 });
+    // axiosRetry(this.clientInstance, { retries: 3 });
 
   }
 
 }
 
 
-
-export default ExtendedHttpClient
+export default ExtendedHttpClient;
