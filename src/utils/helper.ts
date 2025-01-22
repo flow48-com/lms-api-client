@@ -21,6 +21,4 @@ export const handleParamsSerializer = (params: Record<string, unknown> | URLSear
       return `${key}=${encodeURIComponent(value as string)}`;
     })
     .join('&');
-
-
 }
