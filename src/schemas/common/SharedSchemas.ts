@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { formatDate } from 'utils/formatDate';
 import { isValid } from 'date-fns';
+import { formatDate } from 'utils/helper';
 
 // INVESTIGATE: Should be check how to use in self refference
 export const ZodDateWithFormat = z

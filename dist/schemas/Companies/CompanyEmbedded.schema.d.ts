@@ -1,0 +1,12 @@
+import { z } from 'zod';
+export declare const CompanyEmbedded: z.ZodObject<{
+    sortFields: z.ZodArray<z.ZodEnum<["createdAt", "updatedAt", "companyType", "companySourceType", "loanOfficerUserId", "companyIdentifier", "ibfCreditLimit", "rbfCreditLimit", "creditLimit", "nextReviewDate", "isComplianceApproved", "nextComplianceReviewDate"]>, "many">;
+    includeValues: z.ZodArray<z.ZodEnum<["incorporationDate", "companyType", "industry", "companySourceType", "partnerCompanyIdentifier", "email", "phone", "website", "isPartner", "contactName", "loanOfficerUserId", "ibfCreditLimit", "rbfCreditLimit", "creditLimit", "creditScore", "nextReviewDate", "isComplianceApproved", "nextComplianceReviewDate", "bankName", "iban", "swift", "bankAddress", "createdAt", "updatedAt", "updatedByUserId", "incorporationCountry", "currency", "partnerCompany", "utilizedCredit"]>, "many">;
+}, "strip", z.ZodTypeAny, {
+    sortFields: ("companyType" | "loanOfficerUserId" | "ibfCreditLimit" | "rbfCreditLimit" | "creditLimit" | "nextReviewDate" | "isComplianceApproved" | "nextComplianceReviewDate" | "createdAt" | "updatedAt" | "companyIdentifier" | "companySourceType")[];
+    includeValues: ("email" | "phone" | "incorporationDate" | "companyType" | "industry" | "isPartner" | "partnerCompany" | "website" | "contactName" | "loanOfficerUserId" | "ibfCreditLimit" | "rbfCreditLimit" | "creditLimit" | "creditScore" | "nextReviewDate" | "isComplianceApproved" | "nextComplianceReviewDate" | "bankName" | "iban" | "swift" | "bankAddress" | "createdAt" | "updatedAt" | "updatedByUserId" | "currency" | "companySourceType" | "partnerCompanyIdentifier" | "incorporationCountry" | "utilizedCredit")[];
+}, {
+    sortFields: ("companyType" | "loanOfficerUserId" | "ibfCreditLimit" | "rbfCreditLimit" | "creditLimit" | "nextReviewDate" | "isComplianceApproved" | "nextComplianceReviewDate" | "createdAt" | "updatedAt" | "companyIdentifier" | "companySourceType")[];
+    includeValues: ("email" | "phone" | "incorporationDate" | "companyType" | "industry" | "isPartner" | "partnerCompany" | "website" | "contactName" | "loanOfficerUserId" | "ibfCreditLimit" | "rbfCreditLimit" | "creditLimit" | "creditScore" | "nextReviewDate" | "isComplianceApproved" | "nextComplianceReviewDate" | "bankName" | "iban" | "swift" | "bankAddress" | "createdAt" | "updatedAt" | "updatedByUserId" | "currency" | "companySourceType" | "partnerCompanyIdentifier" | "incorporationCountry" | "utilizedCredit")[];
+}>;
+//# sourceMappingURL=CompanyEmbedded.schema.d.ts.map

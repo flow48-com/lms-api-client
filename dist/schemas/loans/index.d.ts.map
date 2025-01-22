@@ -1,0 +1,1 @@
+{"version":3,"file":"index.d.ts","sourceRoot":"","sources":["../../../src/schemas/loans/index.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,mBAAmB,EAAE,yBAAyB,EAAE,MAAM,uBAAuB,CAAC;AACvF,OAAO,EAAE,cAAc,EAAE,mBAAmB,EAAE,MAAM,mBAAmB,CAAC;AACxE,OAAO,EAAE,eAAe,EAAE,MAAM,oBAAoB,CAAC;AAErD,YAAY,EACV,eAAe,EACf,0BAA0B,EAC1B,mBAAmB,EACnB,gBAAgB,GACjB,MAAM,cAAc,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"OzowPaymentRequest.schema.d.ts","sourceRoot":"","sources":["../../../src/schemas/PaymentRequest/OzowPaymentRequest.schema.ts"],"names":[],"mappings":"AAGA,eAAO,MAAM,0BAA0B;;;;CAItC,CAAC;AAEF,MAAM,MAAM,2BAA2B,GAAG,OAAO,0BAA0B,CAAC;AAE5E,MAAM,MAAM,mBAAmB,GAAG;IAChC,QAAQ,EAAE,2BAA2B,CAAC;IACtC,MAAM,EAAE,eAAe,CAAC;CACzB,CAAC"}
