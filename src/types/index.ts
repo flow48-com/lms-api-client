@@ -17,3 +17,8 @@ export type WithMeta<T> = T & {
 export type Link = {
   href: string;
 };
+
+export type CustomType<Data, Links, Embedded = NonNullable<unknown>> = WithEmbedded<
+  WithLinks<WithMeta<Data>, Links>,
+  Embedded
+>;

@@ -1,9 +1,11 @@
-import { WithEmbedded, WithLinks, WithMeta } from 'types';
+import { format, isValid } from 'date-fns';
 
-export type CustomType<Data, Links, Embedded = NonNullable<unknown>> = WithEmbedded<
-  WithLinks<WithMeta<Data>, Links>,
-  Embedded
->;
+export const formatDate = (date: Date) => {
+  const _date = new Date(date);
+  return isValid(_date) ? format(_date, 'yyyy-MM-dd') : 'Invalid date';
+};
+
+export const todayDate = format(new Date(), 'yyyy-MM-dd');
 
 
 export const handleParamsSerializer = (params: Record<string, unknown> | URLSearchParams): string => {
@@ -19,5 +21,6 @@ export const handleParamsSerializer = (params: Record<string, unknown> | URLSear
       return `${key}=${encodeURIComponent(value as string)}`;
     })
     .join('&');
+
 
 }

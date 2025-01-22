@@ -10,7 +10,9 @@ import {
   SetLoanDefaultReviewStatusPayload,
   WriteOffLoanPayload,
 } from 'generated/data-contracts';
-import { TValidatePaymentLinkRequest } from 'components/ExtendedLoans/interfaces';
+import { TNewLoan, TValidatePaymentLinkRequest } from 'components/ExtendedLoans/interfaces';
+import { TPaymentRequestsSchemaResponse } from 'schemas/PaymentRequest';
+import { LoanRevioDisbursementsResponse } from 'schemas/loans-old';
 
 class ExtendedLoans {
   private loans: Loans;
@@ -28,9 +30,8 @@ class ExtendedLoans {
   };
 
   getPaymentLinkRequests = (loanId: string, params?: URLSearchParams) => {
-    // FIXME: This method should be implemented in API docs now it missed QURY params
+    // FIXME: This method should be implemented in API docs now it missed QUERY params
     // return this.loans.getPaymentLinkRequests(loanId, convertURLSearchParamsToRequestParams(params));
-
     return this.loans.http.request<GetPaymentLinkRequestsData, any>({
       path: `/loans/${loanId}/paymentLinkRequests`,
       method: 'GET',

@@ -1,11 +1,9 @@
+import 'axios-retry';
 import { ApiConfig, HttpClient } from 'generated/http-client';
-import { handleParamsSerializer } from '../helper';
-import { ParamsSerializerOptions } from 'axios';
-import axiosRetry from 'axios-retry';
+import { handleParamsSerializer } from 'utils/helper';
 
 
 class ExtendedHttpClient extends HttpClient {
-
   constructor(params: ApiConfig) {
     super({
       baseURL: params.baseURL,
@@ -16,13 +14,12 @@ class ExtendedHttpClient extends HttpClient {
 
         return handleParamsSerializer(params);
       },
+
       'axios-retry': {
         retries: 3,
       },
       ...params,
     });
-
-    // axiosRetry(this.clientInstance, { retries: 3 });
 
   }
 

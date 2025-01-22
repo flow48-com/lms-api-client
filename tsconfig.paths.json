@@ -9,7 +9,9 @@
       "types": [ "src/types" ],
       "clients": [ "src/clients" ],
       "clients/*": [ "src/clients/*" ],
-      "generated/*": [ "src/generated/*" ]
+      "generated/*": [ "src/generated/*" ],
+      "schemas": [ "src/schemas/*" ],
+      "schemas/*": [ "src/schemas/*" ]
     }
   }
 }
