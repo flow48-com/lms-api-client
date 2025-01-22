@@ -1,0 +1,147 @@
+name: Auto-Fill PR Template with Jira Ticket, Reviewers, and Approvers
+
+on:
+  pull_request:
+    types: [ opened, reopened, assigned, unassigned, synchronize, review_requested, review_request_removed ]
+  pull_request_review:
+    types: [ submitted ]
+
+env:
+  JIRA_BASE_URL: https://flow48.atlassian.net
+  DEBUG: true
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  auto_fill_pr_template:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout Repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Extract Jira Ticket from Branch Name
+      - name: Extract Jira Ticket from Branch Name
+        id: extract_jira
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          echo "Branch Name: $BRANCH_NAME"
+          
+          if [[ "$BRANCH_NAME" =~ ^(FLW-[0-9]+) ]]; then
+            JIRA_TICKET="${BASH_REMATCH[1]}"
+            echo "✅ Jira Ticket Found: $JIRA_TICKET"
+            echo "jira_ticket=$JIRA_TICKET" >> $GITHUB_ENV
+          else
+            echo "⚠️ No valid Jira ticket found in branch name."
+            echo "jira_ticket=NO_JIRA_TASK" >> $GITHUB_ENV
+          fi
+
+      # Step 3: Extract PR Reviewers
+      - name: Extract PR Reviewers
+        id: extract_reviewers
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🔍 Fetching PR Reviewers..."
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          
+          # Fetch reviewer usernames
+          REVIEWERS=$(gh api repos/${{ github.repository }}/pulls/${PR_NUMBER} --jq '.requested_reviewers[].login' | awk '{print "@"$0}' | tr '\n' ' ')
+          
+          if [ -z "$REVIEWERS" ]; then
+            REVIEWERS=""
+          fi
+          
+          echo "👀 Reviewers: ${REVIEWERS:-None found}"
+          echo "reviewers=$REVIEWERS" >> $GITHUB_ENV
+
+      # Step 4: Extract PR Assignees
+      - name: Extract PR Assignees
+        id: extract_assignees
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🔍 Fetching PR Assignees..."
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          
+          # Fetch assignees
+          ASSIGNEES=$(gh api repos/${{ github.repository }}/pulls/${PR_NUMBER} --jq '.assignees[].login' | awk '{print "@"$0}' | tr '\n' ' ')
+          
+          if [ -z "$ASSIGNEES" ]; then
+            ASSIGNEES=""
+          fi
+          
+          echo "👀 Assignees: ${ASSIGNEES:-None found}"
+          echo "assignees=$ASSIGNEES" >> $GITHUB_ENV
+
+      # Step 5: Extract PR Approvers
+      - name: Extract PR Approvers
+        id: extract_approvers
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🔍 Fetching PR Approvers..."
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          
+          # Fetch all reviews and filter for "approved"
+          APPROVERS=$(gh api repos/${{ github.repository }}/pulls/${PR_NUMBER}/reviews --jq '.[] | select(.state == "APPROVED") | .user.login' | awk '{print "@"$0}' | tr '\n' ' ')
+          
+          if [ -z "$APPROVERS" ]; then
+            APPROVERS=""
+          fi
+          
+          echo "👀 Approvers: ${APPROVERS:-None found}"
+          echo "approvers=$APPROVERS" >> $GITHUB_ENV
+
+      # Step 6: Prepare PR Body from Template
+      - name: Prepare PR Body from Template
+        id: prepare_body
+        run: |
+          TEMPLATE_FILE=".github/pull_request_template.md"
+          if [ ! -f "$TEMPLATE_FILE" ]; then
+            echo "❌ Template file not found!"
+            exit 1
+          fi
+
+          # Load the template
+          BODY=$(cat "$TEMPLATE_FILE")
+          echo "📄 Template loaded successfully."
+
+          # Replace Jira placeholder if a ticket is detected
+          if [[ "${jira_ticket}" != "NO_JIRA_TASK" ]]; then
+            JIRA_TEXT="${jira_ticket}"
+            JIRA_LINK="https://flow48.atlassian.net/browse/${jira_ticket}"
+            JIRA_MARKDOWN="[${JIRA_TEXT}](${JIRA_LINK})"
+
+            echo "🔄 Replacing Jira placeholder with: $JIRA_MARKDOWN"
+
+            # Replace both Jira text and link together
+            BODY=$(echo "$BODY" | sed -E "s|\[FLW-####\]\(https://flow48.atlassian.net/browse/FLW-####\)|${JIRA_MARKDOWN}|g")
+          fi
+          
+          # Combine reviewers, assignees, and approvers
+          CONTRIBUTORS=$(echo -e "${reviewers}\n${assignees}\n${approvers}" | tr ' ' '\n' | sort | uniq | tr '\n' ' ')
+
+          if [[ -z "$CONTRIBUTORS" ]]; then
+            CONTRIBUTORS="No contributors assigned"
+          fi
+          
+          echo "🔄 Replacing Reviewer placeholder with: ${CONTRIBUTORS}"
+          BODY=$(echo "$BODY" | sed -E "s|Reviewer:|Reviewer: ${CONTRIBUTORS}|g")
+          
+          echo "📝 Final PR Body:"
+          echo "$BODY"
+
+          echo "BODY<<EOF" >> $GITHUB_ENV
+          echo "$BODY" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      # Step 7: Update PR Description
+      - name: Update PR Description
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          echo "🚀 Updating PR #$PR_NUMBER with new body content."
+
+          gh pr edit $PR_NUMBER --body "$BODY"

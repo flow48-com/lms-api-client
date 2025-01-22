@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "components/*": [ "src/components/*" ],
+      "components": [ "src/components" ],
+      "utils/*": [ "src/utils/*" ],
+      "utils": [ "src/utils" ],
+      "types/*": [ "src/types/*" ],
+      "types": [ "src/types" ],
+      "clients": [ "src/clients" ],
+      "clients/*": [ "src/clients/*" ],
+      "generated/*": [ "src/generated/*" ],
+      "schemas": [ "src/schemas/*" ],
+      "schemas/*": [ "src/schemas/*" ]
+    }
+  }
+}

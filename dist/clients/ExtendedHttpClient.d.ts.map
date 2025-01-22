@@ -1,0 +1,1 @@
+{"version":3,"file":"ExtendedHttpClient.d.ts","sourceRoot":"","sources":["../../src/clients/ExtendedHttpClient.ts"],"names":[],"mappings":"AAAA,OAAO,aAAa,CAAC;AACrB,OAAO,EAAE,SAAS,EAAE,UAAU,EAAE,MAAM,uBAAuB,CAAC;AAI9D,cAAM,kBAAmB,SAAQ,UAAU;gBAC7B,MAAM,EAAE,SAAS;CAmB9B;AAGD,eAAe,kBAAkB,CAAC"}
